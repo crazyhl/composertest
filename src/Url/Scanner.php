@@ -11,7 +11,8 @@ class Scanner
 	
 	public function __construct(array $urls)
 	{
-		$this->url = $urls;
+		$this->urls = $urls;
+
 		$this->httpClient = new \GuzzleHttp\Client();
 	}
 
@@ -35,4 +36,10 @@ class Scanner
 		
 		return $invalidUrls;
 	}
+
+    protected function getStatusCodeForUrl($url)
+    {
+        $httpResponse = $this->httpClient->options($url);
+        return $httpResponse->getStatusCode();
+    }
 }
